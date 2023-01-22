@@ -15,8 +15,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - name: Change Working Directory 
-        run: ls       
+      - name: Listing Directory 
+        run: ls    
+      - name: Changeing worling Directory  
+        run: cd app
       - name: Building project
         run: npm run build
       - name: Configure AWS Credentials
