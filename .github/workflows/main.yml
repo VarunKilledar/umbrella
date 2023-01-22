@@ -17,13 +17,9 @@ jobs:
           node-version: "16"
       - name: Listing Directory 
         run: ls    
-      - name: Changeing working Directory  
-        run: |
-          working-directory: ./app
-      - name: Building project
-        run: cd app
       - name: Making Build
         run: npm run build
+        working-directory: ./app
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
