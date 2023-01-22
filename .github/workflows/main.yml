@@ -16,7 +16,10 @@ jobs:
         with:
           node-version: "16"
       - name: Listing Directory 
-        run: ls    
+        run: ls
+      - name: Making Build
+        run: npm i
+        working-directory: ./app
       - name: Making Build
         run: npm run build
         working-directory: ./app
