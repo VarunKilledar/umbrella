@@ -1,3 +1,41 @@
-on: push
-jobs: Deploy React AApp
+name: Deploy react app
 
+on: 
+  push:
+    branch: -m
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cheackout Code
+      uses: actions/checkout@v2
+    
+    - name: Setup Node.js
+    - uses: actions/setup-node@v3
+  with:
+    node-version: 16
+- run: npm ci
+- run: npm test
+
+- name: Install NPM
+  uses: install npm
+
+- name: Checking NPM 
+  user: node -v
+ uses: node hello.js
+
+- name: Creating Build
+  uses: npm rum build
+
+- name: AWS Bucket 
+  uses: actions/checkout@v1  
+- name: Aws Cridentials
+  uses: aws-actions/configure-aws-credentials@v1
+  with:
+        aws-access-key-id: ${{ secrets.ACCESS }}
+        aws-secret-access-key: ${{ secrets.SECRET }}
+        aws-region: us-east-2
+- name: Deploy to S3
+  run: aws s3 sync build .s3://umbrellaprojectrepo --recursive
