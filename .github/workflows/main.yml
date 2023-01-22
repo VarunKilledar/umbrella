@@ -1,33 +1,30 @@
-name: Deploy react app
-
-on: 
+name: dev-build-and-deploy
+# Run workflow only on push to dev branch
+on:
   push:
-    branch: -m
+    branches:
+      - dev
 jobs:
-  build:
+  # To build the project
+  build-tambola:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Cheackout Code
-      uses: actions/checkout@v2
+      - name: Checking out code
+        uses: actions/checkout@v3
+      - name: Installing Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - name: Installing dependencies
+        run: npm install
+      - name: Building project
+        run: npm run build
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS}}
+          aws-secret-access-key: ${{ secrets.SECRET}}
+          aws-region: us-west-1
 
-    - name: Install NPM
-      uses: install npm
-
-    - name: Checking NPM 
-      user: node -v
-    uses: node hello.js
-
-    - name: Creating Build
-      uses: npm rum build
-
-    - name: AWS Bucket 
-      uses: actions/checkout@v1  
-    - name: Aws Cridentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-            aws-access-key-id: ${{ secrets.ACCESS }}
-            aws-secret-access-key: ${{ secrets.SECRET }}
-            aws-region: us-east-2
-    - name: Deploy to S3
-      run: aws s3 sync build .s3://umbrellaprojectrepo --recursive
+      - name: Deploy to S3 bucket
+        run: aws s3 sync ./app/build s3://umbrellaprojectrepo --delete
