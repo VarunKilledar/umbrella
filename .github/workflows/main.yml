@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: "16"
       - name: Change Working Directory 
-        run: cd app         
+        run: ls       
       - name: Building project
         run: npm run build
       - name: Configure AWS Credentials
