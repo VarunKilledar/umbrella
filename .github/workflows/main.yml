@@ -18,7 +18,8 @@ jobs:
       - name: Listing Directory 
         run: ls    
       - name: Changeing working Directory  
-        working-directory: ./app
+        run: |
+          working-directory: ./app
       - name: Building project
         run: cd app
       - name: Making Build
